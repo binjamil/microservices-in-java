@@ -35,7 +35,7 @@ public class BookServiceImpl implements BookService {
         );
 
         var dto = mapper.map(entity, BookDto.class);
-        dto.setServiceAddress(this.serviceUtil.getServiceAddress());
+        dto.setServiceAddress(serviceUtil.getServiceAddress());
 
         LOGGER.info("FETCH Book[id={}]", bookId);
         return dto;
@@ -43,6 +43,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto createBook(BookDto bookDto) {
+        // Move this to composite service
         if (bookDto.getId() != 0) {
             throw new BadRequestException("Id is auto-generated so don't provide it in request body");
         }
@@ -51,7 +52,7 @@ public class BookServiceImpl implements BookService {
         var savedEntity = repository.save(entity);
 
         var dto = mapper.map(savedEntity, BookDto.class);
-        dto.setServiceAddress(this.serviceUtil.getServiceAddress());
+        dto.setServiceAddress(serviceUtil.getServiceAddress());
 
         LOGGER.info("CREATE Book[id={}]", dto.getId());
         return dto;
