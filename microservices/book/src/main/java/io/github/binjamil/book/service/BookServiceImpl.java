@@ -11,6 +11,7 @@ import io.github.binjamil.api.core.book.BookDto;
 import io.github.binjamil.api.core.book.BookService;
 import io.github.binjamil.book.persistence.Book;
 import io.github.binjamil.book.persistence.BookRepository;
+import io.github.binjamil.util.ServiceUtil;
 
 @RestController
 public class BookServiceImpl implements BookService {
@@ -19,17 +20,21 @@ public class BookServiceImpl implements BookService {
     
     private final ModelMapper mapper;
     private final BookRepository repository;
+    private final ServiceUtil serviceUtil;
 
-    public BookServiceImpl(ModelMapper mapper, BookRepository repository) {
+    public BookServiceImpl(ModelMapper mapper, BookRepository repository, ServiceUtil serviceUtil) {
         this.mapper = mapper;
         this.repository = repository;
+        this.serviceUtil = serviceUtil;
     }
 
     @Override
     public BookDto getBook(int bookId) {
         LOGGER.info("Will get book info for id={}", bookId);
         var entity = repository.findById(bookId).orElseThrow(() -> new EntityNotFoundException());
-        return mapper.map(entity, BookDto.class);
+        var dto = mapper.map(entity, BookDto.class);
+        dto.setServiceAddress(this.serviceUtil.getServiceAddress());
+        return dto;
     }
 
     @Override
@@ -37,6 +42,8 @@ public class BookServiceImpl implements BookService {
         LOGGER.info("Will create new book info with title={}", bookDto.getTitle());
         var entity = mapper.map(bookDto, Book.class);
         var savedEntity = repository.save(entity);
-        return mapper.map(savedEntity, BookDto.class);
+        var dto = mapper.map(savedEntity, BookDto.class);
+        dto.setServiceAddress(this.serviceUtil.getServiceAddress());
+        return dto;
     }    
 }
