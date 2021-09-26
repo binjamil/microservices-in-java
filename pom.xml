@@ -11,6 +11,7 @@
     <modules>
         <module>api</module>
         <module>microservices/book</module>
+        <module>microservices/rating</module>
         <module>microservices/review</module>
         <module>util</module>
     </modules>
