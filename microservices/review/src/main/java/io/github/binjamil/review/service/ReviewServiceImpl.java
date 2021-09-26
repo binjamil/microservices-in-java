@@ -43,13 +43,13 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDto createReview(ReviewDto reviewDto) {
-        // Move this to composite-service
-        // Also check if bookId is present before adding review in composite-service
+        // TODO check if bookId actually exists in composite service
+        // TODO move these checks to composite-service too
         if (reviewDto.getId() != 0) {
             throw new BadRequestException("Id is auto-generated so don't provide it in request body");
         }
         if (reviewDto.getBookId() == 0) {
-            throw new BadRequestException("Field bookId is required to create a review");
+            throw new BadRequestException("Field bookId is required to add a review");
         }
 
         var entity = mapper.map(reviewDto, Review.class);
