@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.github.binjamil</groupId>
-	<artifactId>book-service</artifactId>
+	<artifactId>review-service</artifactId>
 	<version>1.0.0</version>
-	<name>book-service</name>
-	<description>Book microservice for Project Readings</description>
+	<name>review-service</name>
+	<description>Review microservice for Project Readings</description>
 	<properties>
 		<java.version>16</java.version>
 	</properties>
