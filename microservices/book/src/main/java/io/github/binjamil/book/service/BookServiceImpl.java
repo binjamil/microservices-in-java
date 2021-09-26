@@ -55,5 +55,15 @@ public class BookServiceImpl implements BookService {
 
         LOGGER.info("CREATE Book[id={}]", dto.getId());
         return dto;
-    }    
+    }
+
+    @Override
+    public void deleteBook(int bookId) {
+        var entity = repository.findById(bookId).orElseThrow(() -> 
+            new NotFoundException("No book found for id=" + bookId)
+        );
+
+        LOGGER.info("DELETE Book[id={}]", bookId);
+        repository.delete(entity);
+    }
 }

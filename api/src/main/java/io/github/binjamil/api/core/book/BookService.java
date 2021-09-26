@@ -1,5 +1,6 @@
 package io.github.binjamil.api.core.book;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,4 +13,7 @@ public interface BookService {
 
     @PostMapping(value = "/book", produces = "application/json")
     public BookDto createBook(@RequestBody BookDto bookDto);
+
+    @DeleteMapping(value = "/book/{bookId}")
+    public void deleteBook(@PathVariable int bookId);
 }
