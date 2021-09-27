@@ -33,7 +33,7 @@ public class GlobalControllerAdvice {
         final String path = request.getDescription(false);
         final String message = ex.getMessage();
 
-        LOGGER.info("Returning HTTP status: {} for path: {}, message: {}", status, path, message);
+        LOGGER.info("ERROR {}[{}]", status.value(), message);
         return HttpErrorInfo.builder()
             .httpStatus(status)
             .path(path)

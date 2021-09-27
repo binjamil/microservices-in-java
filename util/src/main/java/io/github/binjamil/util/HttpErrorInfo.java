@@ -5,11 +5,15 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.http.HttpStatus;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class HttpErrorInfo {
     
     private HttpStatus httpStatus;
