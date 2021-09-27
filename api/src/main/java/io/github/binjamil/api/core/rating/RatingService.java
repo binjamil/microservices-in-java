@@ -16,6 +16,6 @@ public interface RatingService {
     @PostMapping(value = "/rating", produces = "application/json")
     public RatingDto createRating(@RequestBody RatingDto ratingDto);
 
-    @DeleteMapping(value = "rating")
+    @DeleteMapping(value = "/rating")
     public void deleteRatings(@RequestParam(value = "bookId", required = true) int bookId);
 }
