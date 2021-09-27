@@ -10,6 +10,7 @@
 
     <modules>
         <module>api</module>
+        <module>microservices/composite</module>
         <module>microservices/book</module>
         <module>microservices/rating</module>
         <module>microservices/review</module>

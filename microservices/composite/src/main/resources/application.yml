@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+app:
+  book-service:
+    host: localhost
+    port: 7001
+  rating-service:
+    host: localhost
+    port: 7002
+  review-service:
+    host: localhost
+    port: 7003
