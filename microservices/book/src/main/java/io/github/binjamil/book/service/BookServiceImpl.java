@@ -43,7 +43,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto createBook(BookDto bookDto) {
-        // Move this to composite service
         if (bookDto.getId() != 0) {
             throw new BadRequestException("Id is auto-generated so don't provide it in request body");
         }

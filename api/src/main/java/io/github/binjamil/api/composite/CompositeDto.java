@@ -16,6 +16,7 @@ public class CompositeDto {
     private String author;
     private double rating;
     private List<ReviewSummary> reviews;
+    private ServiceAddresses serviceAddresses;
 
     public record ReviewSummary(
         int id,

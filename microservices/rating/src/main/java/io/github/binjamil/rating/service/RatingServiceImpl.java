@@ -43,8 +43,6 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public RatingDto createRating(RatingDto ratingDto) {
-        // TODO check if bookId actually exists in composite service
-        // TODO move these checks to composite-service too
         if (ratingDto.getId() != 0) {
             throw new BadRequestException("Id is auto-generated so don't provide it in request body");
         }
