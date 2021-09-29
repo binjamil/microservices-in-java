@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  book:
+    image: mbinjamil/book-service:1.0.0
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  rating:
+    image: mbinjamil/rating-service:1.0.0
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  review:
+    image: mbinjamil/review-service:1.0.0
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  composite:
+    image: mbinjamil/composite-service:1.0.0
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - 8080:8080
+
+  postgres:
+    image: postgres:13.4
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=readings
+    volumes:
+      - /readings/postgres:/var/lib/postgresql/data
+    restart: always
+    logging:
+      options:
+        max-file: "10"
+        max-size: "50m"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

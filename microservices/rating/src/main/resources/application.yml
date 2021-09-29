@@ -1,2 +1,21 @@
 server:
   port: 7002
+
+# Strongly recommend to set this property to "none" in a production environment!
+spring.jpa.hibernate.ddl-auto: update
+
+spring.datasource:
+  url: jdbc:postgresql://localhost:5432/readings
+  username: postgres
+  password: postgres
+
+spring.datasource.hikari.initializationFailTimeout: 60000
+
+---
+spring.config.activate.on-profile: docker
+
+server:
+  port: 8080
+
+spring.datasource:
+  url: jdbc:postgresql://postgres:5432/readings

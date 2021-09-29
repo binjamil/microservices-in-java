@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 7000
 
 app:
   book-service:
@@ -11,3 +11,20 @@ app:
   review-service:
     host: localhost
     port: 7003
+    
+---
+spring.config.activate.on-profile: docker
+
+server:
+  port: 8080
+
+app:
+  book-service:
+    host: book
+    port: 8080
+  rating-service:
+    host: rating
+    port: 8080
+  review-service:
+    host: review
+    port: 8080
