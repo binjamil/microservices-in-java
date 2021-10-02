@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: centralized-config
+data:
+  application.yml: |
+    server:
+      port: 8080
+  core.yml: |
+    spring.datasource:
+      url: jdbc:postgresql://postgres:5432/readings
+      username: postgres
+      password: postgres
+    spring.jpa.hibernate.ddl-auto: update
+  composite.yml: |
+    app:
+      book-service:
+        host: book-service
+        port: 8080
+      rating-service:
+        host: rating-service
+        port: 8080
+      review-service:
+        host: review-service
+        port: 8080

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-deployment
+  labels:
+    app: book
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book
+  template:
+    metadata:
+      labels:
+        app: book
+    spec:
+      containers:
+        - name: book
+          image: mbinjamil/book-service:1.0.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: file:/config-repo/application.yml,file:/config-repo/core.yml
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config-repo
+      volumes:
+        - name: config-volume
+          configMap:
+            name: centralized-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: book-service
+  labels:
+    app: book
+spec:
+  type: ClusterIP
+  selector:
+    app: book
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rating-deployment
+  labels:
+    app: rating
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rating
+  template:
+    metadata:
+      labels:
+        app: rating
+    spec:
+      containers:
+        - name: rating
+          image: mbinjamil/rating-service:1.0.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: file:/config-repo/application.yml,file:/config-repo/core.yml
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config-repo
+      volumes:
+        - name: config-volume
+          configMap:
+            name: centralized-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rating-service
+  labels:
+    app: rating
+spec:
+  type: ClusterIP
+  selector:
+    app: rating
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

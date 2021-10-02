@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: composite-deployment
+  labels:
+    app: composite
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: composite
+  template:
+    metadata:
+      labels:
+        app: composite
+    spec:
+      containers:
+        - name: composite
+          image: mbinjamil/composite-service:1.0.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: file:/config-repo/application.yml,file:/config-repo/composite.yml
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config-repo
+      volumes:
+        - name: config-volume
+          configMap:
+            name: centralized-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: composite-service
+  labels:
+    app: composite
+spec:
+  type: ClusterIP
+  selector:
+    app: composite
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
